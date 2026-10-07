@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IN-PURCHASES TOP-UP | Fast Mobile Money Top-Up for PUBG Mobile, FC Mobile & Mobile Games</title>
+  <meta name="description" content="IN-PURCHASES TOP-UP - Ghana's most reliable manual in-game item purchasing platform. PUBG Mobile UC, FC Mobile, Modern Warships, Delta Force, Blood Strike & more via Telecel Mobile Money.">
+  <meta name="keywords" content="IN-PURCHASES TOP-UP, PUBG Mobile UC Top Up, PUBG UC Ghana, FC Mobile FC Points, Modern Warships Gold, Delta Force Delta Coins, Telecel Cash Top Up, Mobile Gaming Ghana">
+  
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=display" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Advanced Navigation Bar -->
+  <nav class="navbar" id="mainNavbar">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo">
+        <div class="logo-badge">IPT</div>
+        <div class="brand-text">IN-PURCHASES <span>TOP-UP</span></div>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#games" class="nav-link active"><i class="fa-solid fa-gamepad"></i> Games</a></li>
+        <li><a href="#live-ticker-bar" class="nav-link"><i class="fa-solid fa-bolt" style="color: var(--color-primary);"></i> Live Activity</a></li>
+        <li><a href="#how-it-works" class="nav-link"><i class="fa-solid fa-circle-info"></i> How It Works</a></li>
+        <li><a href="#track" class="nav-link" onclick="openTrackModal()"><i class="fa-solid fa-magnifying-glass"></i> Track Order</a></li>
+        <li><a href="admin.html" class="nav-link nav-admin-btn"><i class="fa-solid fa-user-shield"></i> Admin Portal</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="momo-status-badge">
+          <span class="dot"></span>
+          <span>Telecel MoMo Active</span>
+        </div>
+        <button class="nav-toggle-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation">
+          <i class="fa-solid fa-bars" id="menuToggleIcon"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="container">
+      <div class="hero-banner-wrapper">
+        <div class="hero-content">
+          <div class="hero-tag"><i class="fa-solid fa-bolt"></i> Instant Manual Delivery</div>
+          <h1 class="hero-title">Upgrade Your Game with <span>IN-PURCHASES TOP-UP</span></h1>
+          <p class="hero-description">
+            Direct in-game top-ups for PUBG Mobile (UC & Royale Pass), FC Mobile, Modern Warships, Delta Force, Blood Strike, Arena Breakout and more. Pay easily via Telecel Mobile Money with guaranteed verification.
+          </p>
+          <div class="hero-actions">
+            <a href="#games" class="btn-primary"><i class="fa-solid fa-cart-shopping"></i> Shop Top-Ups Now</a>
+            <button onclick="openTrackModal()" class="btn-secondary"><i class="fa-solid fa-receipt"></i> Track Existing Order</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upgraded Live Order Activity Ticker Bar -->
+      <div class="ticker-container" id="live-ticker-bar">
+        <div class="ticker-label">
+          <span class="ticker-live-dot"></span> LIVE TOP-UPS
+        </div>
+        <div class="ticker-wrap">
+          <div class="ticker-track" id="liveTicker">
+            <!-- Rendered dynamically by app.js -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Game Catalog Section -->
+  <main class="container" id="games">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title"><i class="fa-solid fa-list-check" style="color: var(--color-primary)"></i> Select Game to Top-Up</h2>
+        <p class="section-subtitle">Choose your favorite mobile game, pick your package, and submit your payment reference.</p>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="filter-pills">
+        <button class="filter-btn active" onclick="filterGames('all', this)">All Games</button>
+        <button class="filter-btn" onclick="filterGames('shooter', this)">PUBG & Shooters</button>
+        <button class="filter-btn" onclick="filterGames('sports', this)">FC Mobile</button>
+        <button class="filter-btn" onclick="filterGames('strategy', this)">Naval & Strategy</button>
+      </div>
+    </div>
+
+    <!-- Games Grid -->
+    <div class="games-grid" id="gamesGrid">
+      <!-- Game Cards will be generated dynamically by app.js -->
+    </div>
+  </main>
+
+  <!-- How It Works Section -->
+  <section class="container" id="how-it-works" style="margin-bottom: 60px;">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title"><i class="fa-solid fa-route" style="color: var(--color-secondary)"></i> Simple 4-Step Order Process</h2>
+        <p class="section-subtitle">No complicated account logins or automated bots required.</p>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;"><i class="fa-solid fa-1"></i></div>
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 6px;">Select Game Package</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Choose your desired FC Points, Gold, Delta Coins or In-Game item.</p>
+      </div>
+      <div class="stat-card">
+        <div style="font-size: 2rem; color: var(--color-secondary); margin-bottom: 10px;"><i class="fa-solid fa-2"></i></div>
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 6px;">Enter Player ID</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Provide your in-game User ID / Player Tag so we credit the correct account.</p>
+      </div>
+      <div class="stat-card">
+        <div style="font-size: 2rem; color: var(--color-telecel); margin-bottom: 10px;"><i class="fa-solid fa-3"></i></div>
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 6px;">Pay via Telecel MoMo</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Transfer the amount to Telecel Mobile Money 0205438685 and note your reference number.</p>
+      </div>
+      <div class="stat-card">
+        <div style="font-size: 2rem; color: var(--color-success); margin-bottom: 10px;"><i class="fa-solid fa-4"></i></div>
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 6px;">Manual Verification & Delivery</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Our administrator verifies your reference number and manually credits your game account.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Checkout & Item Selection Modal -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title" id="modalGameTitle">
+          <i class="fa-solid fa-cart-flatbed-suitcases"></i> Item Top-Up Checkout
+        </div>
+        <button class="modal-close" onclick="closeCheckoutModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="topupForm" onsubmit="handleOrderSubmit(event)">
+          <input type="hidden" id="selectedGameId">
+          <input type="hidden" id="selectedGameName">
+          <input type="hidden" id="selectedItemId">
+          <input type="hidden" id="selectedItemName">
+          <input type="hidden" id="selectedItemPrice">
+
+          <!-- Step 1: Select Item Package -->
+          <div class="form-group">
+            <label class="form-label"><i class="fa-solid fa-box-open" style="color: var(--color-primary)"></i> Step 1: Select Item Package</label>
+            <div class="package-grid" id="packagesGrid">
+              <!-- Dynamically populated package items -->
+            </div>
+          </div>
+
+          <!-- Step 2: Game Account Credentials -->
+          <div class="form-group">
+            <label class="form-label" for="playerIdInput"><i class="fa-solid fa-id-card" style="color: var(--color-secondary)"></i> Step 2: Enter Game Player ID / User ID <span style="color: var(--color-telecel)">*</span></label>
+            <input type="text" id="playerIdInput" class="form-input" placeholder="e.g. 109848209 / PlayerTag#1234" required>
+            <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
+              Make sure your Player ID is exact. Find it in your game profile settings.
+            </small>
+          </div>
+
+          <div class="form-group" id="serverGroup" style="display: none;">
+            <label class="form-label" for="serverIdInput"><i class="fa-solid fa-server"></i> Server ID / Zone ID (If applicable)</label>
+            <input type="text" id="serverIdInput" class="form-input" placeholder="e.g. 2001 or Global">
+          </div>
+
+          <!-- Step 3: Customer Details -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label class="form-label" for="customerName"><i class="fa-solid fa-user"></i> Your Full Name <span style="color: var(--color-telecel)">*</span></label>
+              <input type="text" id="customerName" class="form-input" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="customerPhone"><i class="fa-solid fa-phone"></i> Phone / WhatsApp Number <span style="color: var(--color-telecel)">*</span></label>
+              <input type="tel" id="customerPhone" class="form-input" placeholder="e.g. 0201234567" required>
+            </div>
+          </div>
+
+          <!-- Step 4: Telecel Mobile Money Payment Box (CONTAINS RECIPIENT NAME ONLY HERE) -->
+          <div class="momo-payment-box">
+            <div class="momo-header">
+              <div class="momo-title">
+                <i class="fa-solid fa-mobile-screen-button"></i> Telecel Mobile Money Payment Details
+              </div>
+              <span class="status-badge verified">Manual Transfer</span>
+            </div>
+
+            <div class="momo-details-card">
+              <div class="momo-detail-row">
+                <span class="momo-key">Mobile Money Provider:</span>
+                <span class="momo-val" style="color: var(--color-telecel)">Telecel Mobile Money</span>
+              </div>
+              <div class="momo-detail-row">
+                <span class="momo-key">Telecel Number:</span>
+                <span class="momo-val">
+                  0205438685
+                  <button type="button" class="copy-btn" onclick="copyToClipboard('0205438685')"><i class="fa-regular fa-copy"></i> Copy</button>
+                </span>
+              </div>
+              <div class="momo-detail-row">
+                <span class="momo-key">Recipient Name:</span>
+                <span class="momo-val" style="color: var(--color-primary);">Godfred Ansah</span>
+              </div>
+              <div class="momo-detail-row">
+                <span class="momo-key">Total Amount to Send:</span>
+                <span class="momo-val" id="paymentAmountDisplay" style="color: var(--color-accent);">GHS 0.00</span>
+              </div>
+            </div>
+
+            <div style="font-weight: 700; color: #fff; font-size: 0.85rem; margin-bottom: 6px;">Payment Instructions:</div>
+            <ol class="payment-steps">
+              <li>Dial <strong>*110#</strong> or open your <strong>Telecel Play App</strong>.</li>
+              <li>Select <strong>Send Money</strong> &rarr; <strong>Telecel Cash / Telecel User</strong>.</li>
+              <li>Enter Number: <strong>0205438685</strong></li>
+              <li>Verify Recipient Name reads <strong>Godfred Ansah</strong>.</li>
+              <li>Enter exact package amount and approve transaction with your PIN.</li>
+              <li>Copy the Transaction Reference Number from your SMS confirmation and paste it below.</li>
+            </ol>
+          </div>
+
+          <!-- Step 5: Transaction Reference Entry -->
+          <div class="form-group">
+            <label class="form-label" for="paymentRefInput">
+              <i class="fa-solid fa-receipt" style="color: var(--color-accent)"></i> Enter Telecel Transaction Reference Number <span style="color: var(--color-telecel)">*</span>
+            </label>
+            <input type="text" id="paymentRefInput" class="form-input" placeholder="e.g. 2026100298412 or TXN-89410" required>
+            <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
+              Our administrator will check this reference number on Telecel Cash before fulfilling your in-game item.
+            </small>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; font-size: 1.05rem; padding: 16px;" id="submitBtn">
+            <i class="fa-solid fa-paper-plane"></i> Submit Order for Verification
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Confirmation & Receipt Modal -->
+  <div class="modal-overlay" id="receiptModal">
+    <div class="modal-container" style="max-width: 520px;">
+      <div class="modal-header">
+        <div class="modal-title" style="color: var(--color-success)">
+          <i class="fa-solid fa-circle-check"></i> Order Submitted Successfully!
+        </div>
+        <button class="modal-close" onclick="closeReceiptModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" id="receiptBody">
+        <!-- Dynamically rendered order receipt details -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Status Tracking Modal -->
+  <div class="modal-overlay" id="trackModal">
+    <div class="modal-container" style="max-width: 520px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fa-solid fa-magnifying-glass"></i> Track Your Order Status
+        </div>
+        <button class="modal-close" onclick="closeTrackModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Enter Order ID (e.g. IPT-894210) or Phone Number:</label>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" id="trackInput" class="form-input" placeholder="IPT-XXXXXX or Phone Number">
+            <button onclick="performOrderTracking()" class="btn-primary"><i class="fa-solid fa-search"></i></button>
+          </div>
+        </div>
+
+        <div id="trackResultContainer" style="display: none; margin-top: 20px;">
+          <!-- Track order result details -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <div class="brand-logo" style="margin-bottom: 8px;">
+          <div class="logo-badge" style="width: 32px; height: 32px; font-size: 0.9rem;">IPT</div>
+          <div class="brand-text" style="font-size: 1.1rem;">IN-PURCHASES <span>TOP-UP</span></div>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-muted);">Ghana's trusted manual in-game top-up platform for FC Mobile & major esports titles.</p>
+      </div>
+
+      <div style="text-align: right;">
+        <p style="font-size: 0.82rem; color: var(--text-muted);">&copy; 2026 IN-PURCHASES TOP-UP. All rights reserved.</p>
+        <p style="font-size: 0.78rem; color: var(--text-dark); margin-top: 4px;">Powered by Neon PostgreSQL & Render Deployment</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Script -->
+  <script src="js/app.js"></script>
+</body>
+</html>

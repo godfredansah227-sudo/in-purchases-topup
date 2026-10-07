@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: in-purchases-top-up
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: ADMIN_PASSWORD
+        value: admin123
+      - key: DATABASE_URL
+        sync: false # Set your Neon PostgreSQL connection string in Render Dashboard
