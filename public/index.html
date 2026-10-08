@@ -28,10 +28,9 @@
 
       <ul class="nav-links" id="navLinks">
         <li><a href="#games" class="nav-link active"><i class="fa-solid fa-gamepad"></i> Games</a></li>
-        <li><a href="#live-ticker-bar" class="nav-link"><i class="fa-solid fa-bolt" style="color: var(--color-primary);"></i> Live Activity</a></li>
         <li><a href="#how-it-works" class="nav-link"><i class="fa-solid fa-circle-info"></i> How It Works</a></li>
+        <li><a href="#live-ticker-bar" class="nav-link"><i class="fa-solid fa-bolt" style="color: var(--color-primary);"></i> Live Activity</a></li>
         <li><a href="#track" class="nav-link" onclick="openTrackModal()"><i class="fa-solid fa-magnifying-glass"></i> Track Order</a></li>
-        <li><a href="admin.html" class="nav-link nav-admin-btn"><i class="fa-solid fa-user-shield"></i> Admin Portal</a></li>
       </ul>
 
       <div class="nav-actions">
@@ -106,18 +105,6 @@
               </div>
               <span class="chip-action"><i class="fa-solid fa-angle-right"></i></span>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Upgraded Live Order Activity Ticker Bar -->
-      <div class="ticker-container" id="live-ticker-bar">
-        <div class="ticker-label">
-          <span class="ticker-live-dot"></span> LIVE TOP-UPS
-        </div>
-        <div class="ticker-wrap">
-          <div class="ticker-track" id="liveTicker">
-            <!-- Rendered dynamically by app.js -->
           </div>
         </div>
       </div>
@@ -335,8 +322,19 @@
     </div>
   </div>
 
-  <!-- Toast Notification Container -->
-  <div class="toast-container" id="toastContainer"></div>
+  <!-- Upgraded Live Order Activity Ticker Bar (Bottom Position) -->
+  <section class="container" style="margin-bottom: 40px;">
+    <div class="ticker-container" id="live-ticker-bar">
+      <div class="ticker-label">
+        <span class="ticker-live-dot"></span> LIVE TOP-UPS
+      </div>
+      <div class="ticker-wrap">
+        <div class="ticker-track" id="liveTicker">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="footer">
@@ -351,10 +349,16 @@
 
       <div style="text-align: right;">
         <p style="font-size: 0.82rem; color: var(--text-muted);">&copy; 2026 IN-PURCHASES TOP-UP. All rights reserved.</p>
-        <p style="font-size: 0.78rem; color: var(--text-dark); margin-top: 4px;">Powered by Neon PostgreSQL & Render Deployment</p>
+        <p style="font-size: 0.78rem; color: var(--text-dark); margin-top: 4px;">
+          Powered by Neon PostgreSQL & Render Deployment
+          <a href="admin.html" title="Owner Admin Portal" style="color: rgba(255, 255, 255, 0.25); margin-left: 6px; font-size: 0.75rem; text-decoration: none;"><i class="fa-solid fa-lock"></i></a>
+        </p>
       </div>
     </div>
   </footer>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
 
   <!-- Application Script -->
   <script src="js/app.js"></script>

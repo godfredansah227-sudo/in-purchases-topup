@@ -59,51 +59,25 @@
       </div>
       <div class="modal-body">
         
-        <!-- Auth Tabs Switcher -->
-        <div class="auth-tabs">
-          <button type="button" class="auth-tab-btn active" id="loginTabBtn" onclick="switchAuthTab('login')">
-            <i class="fa-solid fa-right-to-bracket"></i> Sign In
-          </button>
-          <button type="button" class="auth-tab-btn" id="registerTabBtn" onclick="switchAuthTab('register')">
-            <i class="fa-solid fa-user-plus"></i> Create Admin Account
-          </button>
+        <!-- Exclusive Master Administrator Authentication Portal -->
+        <div style="background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 18px; text-align: center;">
+          <i class="fa-solid fa-lock" style="color: var(--color-primary); font-size: 1.1rem; margin-bottom: 4px;"></i>
+          <div style="font-size: 0.88rem; font-weight: 700; color: #fff;">Authorized Administrator Access Only</div>
+          <div style="font-size: 0.78rem; color: var(--text-muted);">Public registration is restricted. Enter your master credentials.</div>
         </div>
 
         <!-- Login Form -->
         <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
           <div class="form-group">
             <label class="form-label" for="adminUserInput"><i class="fa-solid fa-user" style="color: var(--color-primary); margin-right: 4px;"></i> Admin Username:</label>
-            <input type="text" id="adminUserInput" class="form-input" required autocomplete="username">
+            <input type="text" id="adminUserInput" class="form-input" required autocomplete="username" placeholder="Enter username">
           </div>
           <div class="form-group">
-            <label class="form-label" for="adminPassInput"><i class="fa-solid fa-key" style="color: var(--color-secondary); margin-right: 4px;"></i> Admin Password:</label>
-            <input type="password" id="adminPassInput" class="form-input" required autocomplete="current-password">
+            <label class="form-label" for="adminPassInput"><i class="fa-solid fa-key" style="color: var(--color-secondary); margin-right: 4px;"></i> Master Password:</label>
+            <input type="password" id="adminPassInput" class="form-input" required autocomplete="current-password" placeholder="Enter password">
           </div>
-          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 12px;">
-            <i class="fa-solid fa-right-to-bracket"></i> Authenticate Access
-          </button>
-        </form>
-
-        <!-- Register / Create Admin Credentials Form -->
-        <form id="adminRegisterForm" onsubmit="handleAdminRegister(event)" style="display: none;">
-          <div class="form-group">
-            <label class="form-label" for="regUserInput"><i class="fa-solid fa-user-gear" style="color: var(--color-primary); margin-right: 4px;"></i> Desired Admin Username:</label>
-            <input type="text" id="regUserInput" class="form-input" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="regPassInput"><i class="fa-solid fa-key" style="color: var(--color-success); margin-right: 4px;"></i> Desired Admin Password:</label>
-            <input type="password" id="regPassInput" class="form-input" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="regConfirmPassInput"><i class="fa-solid fa-check-double" style="color: var(--color-success); margin-right: 4px;"></i> Confirm Password:</label>
-            <input type="password" id="regConfirmPassInput" class="form-input" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="regMasterKeyInput"><i class="fa-solid fa-shield" style="color: var(--color-secondary); margin-right: 4px;"></i> Initial Security Passcode:</label>
-            <input type="password" id="regMasterKeyInput" class="form-input" required>
-          </div>
-          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 12px;">
-            <i class="fa-solid fa-user-plus"></i> Create Admin Account & Sign In
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 14px; min-height: 46px;">
+            <i class="fa-solid fa-shield-halved"></i> Authenticate & Enter Portal
           </button>
         </form>
 

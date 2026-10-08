@@ -498,7 +498,12 @@ app.get('/api/admin/stats', async (req, res) => {
   }
 });
 
-// Fallback to single page app index.html
+// Direct Admin Portal Routes
+app.get(['/admin', '/admin.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+
+// Fallback to single page app index.html for store routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
