@@ -20,10 +20,15 @@
     <div class="container nav-container">
       <a href="index.html" class="brand-logo">
         <div class="logo-badge logo-admin-badge">ADM</div>
-        <div class="brand-text">IN-PURCHASES <span>ADMIN</span></div>
+        <div class="brand-text">IN-PURCHASES <span class="brand-sub">ADMIN</span></div>
       </a>
 
-      <div class="admin-nav-actions">
+      <!-- Mobile Menu Toggle Button -->
+      <button class="admin-menu-toggle" id="adminMenuToggle" onclick="toggleAdminMenu()" aria-label="Toggle Navigation">
+        <i class="fa-solid fa-bars" id="adminMenuIcon"></i>
+      </button>
+
+      <div class="admin-nav-actions" id="adminNavActions">
         <div id="adminUserBadge" class="admin-profile-chip" style="display: none;">
           <span class="online-indicator"></span>
           <i class="fa-solid fa-user-shield" style="color: var(--color-primary);"></i>
@@ -107,70 +112,107 @@
   </div>
 
   <!-- Admin Main Dashboard Content -->
-  <main class="container" id="adminDashboardContent" style="display: none; padding-top: 40px; padding-bottom: 60px;">
+  <main class="container admin-main-container" id="adminDashboardContent" style="display: none;">
     
-    <!-- Admin Security Profile Card -->
-    <div style="background: rgba(20, 29, 51, 0.6); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 18px 24px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
-      <div>
-        <h3 style="color: #fff; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
-          <i class="fa-solid fa-user-shield" style="color: var(--color-primary);"></i> Admin Security & Account Status
-        </h3>
-        <p style="font-size: 0.83rem; color: var(--text-muted);">
-          Logged in as active administrator: <strong style="color: var(--color-primary);" id="activeAdminUserLabel">Mr9iceguy</strong>. You can update your credentials anytime.
+    <!-- Compact Collapsible Account Status Card -->
+    <details class="account-collapsible-card" id="accountStatusDetails">
+      <summary class="account-summary-bar">
+        <div class="account-summary-left">
+          <span class="online-indicator"></span>
+          <i class="fa-solid fa-user-shield" style="color: var(--color-primary);"></i>
+          <span class="account-status-title">Active Admin: <strong id="activeAdminUserLabel" style="color: var(--color-primary);">Mr9iceguy</strong></span>
+        </div>
+        <div class="account-summary-right">
+          <span class="account-manage-btn"><i class="fa-solid fa-key"></i> Security <i class="fa-solid fa-chevron-down account-arrow"></i></span>
+        </div>
+      </summary>
+      <div class="account-details-content">
+        <p class="account-info-text">
+          Logged in as verified administrator. Update your master passcode or username anytime.
         </p>
+        <button onclick="openChangeCredsModal()" class="btn-primary btn-sm">
+          <i class="fa-solid fa-key"></i> Manage Passcode & Account
+        </button>
       </div>
-      <button onclick="openChangeCredsModal()" class="btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">
-        <i class="fa-solid fa-key"></i> Manage Username & Password
+    </details>
+
+    <div class="admin-section-header">
+      <div class="admin-header-title-group">
+        <h2 class="admin-title-text"><i class="fa-solid fa-square-check title-icon"></i> Orders & Payment Verification</h2>
+        <p class="admin-subtitle-text">Verify Telecel MoMo references & credit Player IDs</p>
+      </div>
+
+      <button onclick="fetchAdminData()" class="btn-secondary refresh-btn-header" title="Refresh order status">
+        <i class="fa-solid fa-rotate-right" id="refreshIcon"></i> <span class="refresh-label">Refresh</span>
       </button>
     </div>
 
-    <div class="section-header" style="margin-top: 0;">
-      <div>
-        <h2 class="section-title"><i class="fa-solid fa-chart-line" style="color: var(--color-primary)"></i> Order Fulfillment & Telecel MoMo Verification</h2>
-        <p class="section-subtitle">Verify customer Telecel reference numbers, credit Player IDs, and update order statuses.</p>
-      </div>
-
-      <button onclick="fetchAdminData()" class="btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;">
-        <i class="fa-solid fa-rotate-right"></i> Refresh Orders
-      </button>
-    </div>
-
-    <!-- Summary Stats Cards -->
+    <!-- Summary Stats Cards (2x2 grid on mobile) -->
     <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-value" id="statRevenue" style="color: var(--color-success)">GHS 0.00</div>
-        <div class="stat-label">Total Verified Revenue</div>
-      </div>
-      <div class="stat-card">
+      <div class="stat-card pending-highlight">
+        <div class="stat-card-top">
+          <span class="stat-icon-wrapper pending-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+          <span class="stat-badge-alert">ACTION NEEDED</span>
+        </div>
         <div class="stat-value" id="statPending" style="color: var(--color-warning)">0</div>
         <div class="stat-label">Pending Verifications</div>
       </div>
+
       <div class="stat-card">
+        <div class="stat-card-top">
+          <span class="stat-icon-wrapper revenue-icon"><i class="fa-solid fa-wallet"></i></span>
+        </div>
+        <div class="stat-value" id="statRevenue" style="color: var(--color-success)">GHS 0.00</div>
+        <div class="stat-label">Total Verified Revenue</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-top">
+          <span class="stat-icon-wrapper completed-icon"><i class="fa-solid fa-circle-check"></i></span>
+        </div>
         <div class="stat-value" id="statCompleted" style="color: var(--color-primary)">0</div>
         <div class="stat-label">Completed Orders</div>
       </div>
+
       <div class="stat-card">
+        <div class="stat-card-top">
+          <span class="stat-icon-wrapper total-icon"><i class="fa-solid fa-receipt"></i></span>
+        </div>
         <div class="stat-value" id="statTotal" style="color: #fff">0</div>
         <div class="stat-label">Total Orders Received</div>
       </div>
     </div>
 
     <!-- Filters & Search Bar -->
-    <div style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; justify-content: space-between; align-items: center;">
-      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <button class="filter-btn active" onclick="filterAdminStatus('ALL', this)">All Orders</button>
-        <button class="filter-btn" onclick="filterAdminStatus('Pending Verification', this)">Pending Verification</button>
-        <button class="filter-btn" onclick="filterAdminStatus('Payment Verified', this)">Payment Verified</button>
-        <button class="filter-btn" onclick="filterAdminStatus('Completed', this)">Completed</button>
-        <button class="filter-btn" onclick="filterAdminStatus('Rejected', this)">Rejected</button>
+    <div class="admin-controls-wrapper">
+      <div class="filter-chips-scroll">
+        <button class="filter-btn active" onclick="filterAdminStatus('ALL', this)">All</button>
+        <button class="filter-btn" onclick="filterAdminStatus('Pending Verification', this)">
+          <i class="fa-solid fa-clock"></i> Pending
+        </button>
+        <button class="filter-btn" onclick="filterAdminStatus('Payment Verified', this)">
+          <i class="fa-solid fa-check"></i> Verified
+        </button>
+        <button class="filter-btn" onclick="filterAdminStatus('Completed', this)">
+          <i class="fa-solid fa-circle-check"></i> Completed
+        </button>
+        <button class="filter-btn" onclick="filterAdminStatus('Rejected', this)">
+          <i class="fa-solid fa-ban"></i> Rejected
+        </button>
       </div>
 
-      <div style="display: flex; gap: 10px; width: 300px;">
-        <input type="text" id="adminSearchInput" class="form-input" placeholder="Search Order ID, Player ID, Ref..." oninput="handleAdminSearch()">
+      <div class="admin-search-container">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="adminSearchInput" class="form-input search-input-styled" placeholder="Search Order ID, Player ID, Ref..." oninput="handleAdminSearch()">
       </div>
     </div>
 
-    <!-- Orders Data Table -->
+    <!-- Mobile Order Cards View (Rendered on Mobile/Tablet) -->
+    <div class="admin-cards-wrapper" id="adminOrdersCards">
+      <!-- Rendered dynamically via admin.js -->
+    </div>
+
+    <!-- Orders Data Table (Rendered on Desktop) -->
     <div class="admin-table-wrapper">
       <table class="admin-table">
         <thead>
@@ -192,6 +234,11 @@
     </div>
 
   </main>
+
+  <!-- Sticky Floating Refresh Button for Mobile Quick Access -->
+  <button class="mobile-fab-refresh" id="mobileRefreshFab" onclick="fetchAdminData()" title="Refresh Orders" aria-label="Refresh orders">
+    <i class="fa-solid fa-rotate-right"></i>
+  </button>
 
   <!-- Admin Order Detail Modal -->
   <div class="modal-overlay" id="adminDetailModal">

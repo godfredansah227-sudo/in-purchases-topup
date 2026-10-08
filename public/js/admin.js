@@ -241,8 +241,27 @@ async function handleChangeCredentials(event) {
   }
 }
 
+// Toggle Mobile Header Dropdown Menu
+function toggleAdminMenu() {
+  const actions = document.getElementById('adminNavActions');
+  const icon = document.getElementById('adminMenuIcon');
+  if (actions) {
+    actions.classList.toggle('active');
+    if (icon) {
+      if (actions.classList.contains('active')) {
+        icon.className = 'fa-solid fa-xmark';
+      } else {
+        icon.className = 'fa-solid fa-bars';
+      }
+    }
+  }
+}
+
 // Fetch Orders & Stats from Backend
 async function fetchAdminData() {
+  const refreshIcons = document.querySelectorAll('#refreshIcon, #mobileRefreshFab i');
+  refreshIcons.forEach(icon => icon.classList.add('fa-spin'));
+
   try {
     const res = await fetch('/api/admin/orders');
     const data = await res.json();
@@ -254,6 +273,10 @@ async function fetchAdminData() {
     }
   } catch (err) {
     console.warn('Could not fetch remote admin orders:', err);
+  } finally {
+    setTimeout(() => {
+      refreshIcons.forEach(icon => icon.classList.remove('fa-spin'));
+    }, 500);
   }
 }
 
@@ -293,66 +316,168 @@ function applyFiltersAndSearch() {
   renderAdminTable(filtered);
 }
 
-// Render Orders Table
+// Helper to format timestamps
+function formatOrderTime(dateStr) {
+  if (!dateStr) return 'Just now';
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return String(dateStr);
+    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', month: 'short', day: 'numeric' });
+  } catch (e) {
+    return 'Recently';
+  }
+}
+
+// Render Orders (Table for Desktop & Cards for Mobile)
 function renderAdminTable(orders) {
   const tbody = document.getElementById('adminOrdersTbody');
-  if (!tbody) return;
+  const cardsWrapper = document.getElementById('adminOrdersCards');
 
   if (orders.length === 0) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 30px;">
-          <i class="fa-solid fa-inbox" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
-          No order records found matching current criteria.
-        </td>
-      </tr>
+    const emptyHtml = `
+      <div class="empty-orders-card">
+        <i class="fa-solid fa-inbox empty-icon"></i>
+        <h3 class="empty-title">No orders yet</h3>
+        <p class="empty-desc">No orders match the selected filter or search criteria.</p>
+      </div>
     `;
+
+    if (tbody) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px 20px;">
+            <i class="fa-solid fa-inbox" style="font-size: 2.2rem; margin-bottom: 12px; display: block; color: var(--color-primary);"></i>
+            No orders found matching current criteria.
+          </td>
+        </tr>
+      `;
+    }
+    if (cardsWrapper) {
+      cardsWrapper.innerHTML = emptyHtml;
+    }
     return;
   }
 
-  tbody.innerHTML = orders.map(o => {
-    const statusClass = (o.status === 'Completed') ? 'completed' : ((o.status === 'Rejected') ? 'rejected' : ((o.status === 'Payment Verified') ? 'verified' : 'pending'));
-    const priceFormatted = typeof o.item_price === 'number' ? o.item_price.toFixed(2) : parseFloat(o.item_price || 0).toFixed(2);
+  // Render Desktop Table Rows
+  if (tbody) {
+    tbody.innerHTML = orders.map(o => {
+      const statusClass = (o.status === 'Completed') ? 'completed' : ((o.status === 'Rejected') ? 'rejected' : ((o.status === 'Payment Verified') ? 'verified' : 'pending'));
+      const priceFormatted = typeof o.item_price === 'number' ? o.item_price.toFixed(2) : parseFloat(o.item_price || 0).toFixed(2);
 
-    return `
-      <tr>
-        <td><strong style="color: var(--color-primary);">${o.order_id}</strong></td>
-        <td>
-          <div style="font-weight: 700;">${o.game_name}</div>
-          <div style="font-size: 0.8rem; color: var(--text-muted);">${o.item_name}</div>
-        </td>
-        <td style="font-weight: 800; color: var(--color-accent);">GHS ${priceFormatted}</td>
-        <td>
-          <span style="font-family: monospace; font-size: 0.95rem; color: #fff;">${o.player_id}</span>
-          <button class="copy-btn" onclick="copyToClipboard('${o.player_id}')" title="Copy Player ID"><i class="fa-regular fa-copy"></i></button>
-        </td>
-        <td>
-          <div>${o.customer_name}</div>
-          <div style="font-size: 0.8rem; color: var(--text-muted);">${o.customer_phone}</div>
-        </td>
-        <td>
-          <span class="momo-val" style="font-size: 0.88rem;">${o.payment_reference}</span>
-        </td>
-        <td><span class="status-badge ${statusClass}">${o.status}</span></td>
-        <td>
-          <div style="display: flex; gap: 6px;">
-            <button onclick="updateOrderStatus('${o.id || o.order_id}', 'Payment Verified')" class="copy-btn" style="color: var(--color-primary);" title="Verify Payment">
-              <i class="fa-solid fa-check"></i>
+      return `
+        <tr>
+          <td><strong style="color: var(--color-primary);">${o.order_id}</strong></td>
+          <td>
+            <div style="font-weight: 700;">${o.game_name}</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">${o.item_name}</div>
+          </td>
+          <td style="font-weight: 800; color: var(--color-accent);">GHS ${priceFormatted}</td>
+          <td>
+            <span style="font-family: monospace; font-size: 0.95rem; color: #fff;">${o.player_id}</span>
+            <button class="copy-btn" onclick="copyToClipboard('${o.player_id}')" title="Copy Player ID"><i class="fa-regular fa-copy"></i></button>
+          </td>
+          <td>
+            <div>${o.customer_name}</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">${o.customer_phone}</div>
+          </td>
+          <td>
+            <span class="momo-val" style="font-size: 0.88rem;">${o.payment_reference}</span>
+            <button class="copy-btn" onclick="copyToClipboard('${o.payment_reference}')" title="Copy Ref"><i class="fa-regular fa-copy"></i></button>
+          </td>
+          <td><span class="status-badge ${statusClass}">${o.status}</span></td>
+          <td>
+            <div style="display: flex; gap: 6px;">
+              <button onclick="updateOrderStatus('${o.id || o.order_id}', 'Payment Verified')" class="copy-btn" style="color: var(--color-primary);" title="Verify Payment">
+                <i class="fa-solid fa-check"></i>
+              </button>
+              <button onclick="updateOrderStatus('${o.id || o.order_id}', 'Completed')" class="copy-btn" style="color: var(--color-success);" title="Fulfill / Complete">
+                <i class="fa-solid fa-circle-check"></i>
+              </button>
+              <button onclick="updateOrderStatus('${o.id || o.order_id}', 'Rejected')" class="copy-btn" style="color: var(--color-danger);" title="Reject Order">
+                <i class="fa-solid fa-ban"></i>
+              </button>
+              <button onclick="deleteOrderRecord('${o.id || o.order_id}')" class="copy-btn" style="color: #64748b;" title="Delete">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // Render Mobile Cards View
+  if (cardsWrapper) {
+    cardsWrapper.innerHTML = orders.map(o => {
+      const statusClass = (o.status === 'Completed') ? 'completed' : ((o.status === 'Rejected') ? 'rejected' : ((o.status === 'Payment Verified') ? 'verified' : 'pending'));
+      const priceFormatted = typeof o.item_price === 'number' ? o.item_price.toFixed(2) : parseFloat(o.item_price || 0).toFixed(2);
+      const timeStr = formatOrderTime(o.created_at || o.timestamp);
+
+      return `
+        <div class="order-mobile-card status-border-${statusClass}">
+          <div class="card-header-row">
+            <div class="card-id-block">
+              <span class="card-order-id">${o.order_id}</span>
+              <span class="card-order-time"><i class="fa-regular fa-clock"></i> ${timeStr}</span>
+            </div>
+            <span class="status-badge ${statusClass}">${o.status}</span>
+          </div>
+
+          <div class="card-product-box">
+            <div class="card-product-left">
+              <div class="card-game-name">${o.game_name}</div>
+              <div class="card-item-name">${o.item_name}</div>
+            </div>
+            <div class="card-price-tag">GHS ${priceFormatted}</div>
+          </div>
+
+          <div class="card-details-grid">
+            <div class="card-detail-item">
+              <span class="detail-label">Player ID:</span>
+              <div class="detail-value-wrap">
+                <span class="detail-mono">${o.player_id}</span>
+                <button class="btn-copy-chip" onclick="copyToClipboard('${o.player_id}')" title="Copy Player ID">
+                  <i class="fa-regular fa-copy"></i> Copy
+                </button>
+              </div>
+            </div>
+
+            <div class="card-detail-item">
+              <span class="detail-label">Telecel MoMo Ref:</span>
+              <div class="detail-value-wrap">
+                <span class="detail-mono ref-highlight">${o.payment_reference}</span>
+                <button class="btn-copy-chip" onclick="copyToClipboard('${o.payment_reference}')" title="Copy MoMo Reference">
+                  <i class="fa-regular fa-copy"></i> Copy
+                </button>
+              </div>
+            </div>
+
+            <div class="card-detail-item">
+              <span class="detail-label">Customer Info:</span>
+              <div class="detail-value-wrap">
+                <span class="detail-text">${o.customer_name || 'Customer'} &bull; <a href="tel:${o.customer_phone}" class="customer-tel-link">${o.customer_phone}</a></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-actions-bar">
+            <button onclick="updateOrderStatus('${o.id || o.order_id}', 'Payment Verified')" class="card-action-btn btn-card-verify" title="Verify Payment">
+              <i class="fa-solid fa-check"></i> Verify
             </button>
-            <button onclick="updateOrderStatus('${o.id || o.order_id}', 'Completed')" class="copy-btn" style="color: var(--color-success);" title="Fulfill / Complete">
-              <i class="fa-solid fa-circle-check"></i>
+            <button onclick="updateOrderStatus('${o.id || o.order_id}', 'Completed')" class="card-action-btn btn-card-complete" title="Fulfill Order">
+              <i class="fa-solid fa-circle-check"></i> Complete
             </button>
-            <button onclick="updateOrderStatus('${o.id || o.order_id}', 'Rejected')" class="copy-btn" style="color: var(--color-danger);" title="Reject Order">
-              <i class="fa-solid fa-ban"></i>
+            <button onclick="updateOrderStatus('${o.id || o.order_id}', 'Rejected')" class="card-action-btn btn-card-reject" title="Reject Order">
+              <i class="fa-solid fa-ban"></i> Reject
             </button>
-            <button onclick="deleteOrderRecord('${o.id || o.order_id}')" class="copy-btn" style="color: #64748b;" title="Delete">
+            <button onclick="deleteOrderRecord('${o.id || o.order_id}')" class="card-action-btn btn-card-delete" title="Delete Record">
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
-        </td>
-      </tr>
-    `;
-  }).join('');
+        </div>
+      `;
+    }).join('');
+  }
 }
 
 // Update Stats

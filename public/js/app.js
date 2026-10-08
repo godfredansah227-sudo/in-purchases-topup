@@ -670,7 +670,25 @@ function startTickerBackgroundSimulator() {
 // Mobile Navigation Toggle
 function toggleMobileMenu() {
   const nav = document.getElementById('navLinks');
+  const icon = document.getElementById('menuToggleIcon');
   if (nav) {
-    nav.classList.toggle('active');
+    const isActive = nav.classList.toggle('active');
+    if (icon) {
+      icon.className = isActive ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
   }
 }
+
+// Auto-close mobile navigation menu when selecting a link or clicking outside
+document.addEventListener('click', (e) => {
+  const nav = document.getElementById('navLinks');
+  const toggleBtn = document.querySelector('.nav-toggle-btn');
+  const icon = document.getElementById('menuToggleIcon');
+
+  if (nav && nav.classList.contains('active')) {
+    if (e.target.closest('.nav-link') || (!nav.contains(e.target) && !toggleBtn.contains(e.target))) {
+      nav.classList.remove('active');
+      if (icon) icon.className = 'fa-solid fa-bars';
+    }
+  }
+});

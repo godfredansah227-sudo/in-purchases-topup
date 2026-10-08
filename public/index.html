@@ -37,7 +37,7 @@
       <div class="nav-actions">
         <div class="momo-status-badge">
           <span class="dot"></span>
-          <span>Telecel MoMo Active</span>
+          <span>Telecel MoMo</span>
         </div>
         <button class="nav-toggle-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation">
           <i class="fa-solid fa-bars" id="menuToggleIcon"></i>
@@ -51,14 +51,61 @@
     <div class="container">
       <div class="hero-banner-wrapper">
         <div class="hero-content">
-          <div class="hero-tag"><i class="fa-solid fa-bolt"></i> Instant Manual Delivery</div>
+          <div class="hero-tag"><i class="fa-solid fa-bolt"></i> Ghana's #1 In-Game Store</div>
           <h1 class="hero-title">Upgrade Your Game with <span>IN-PURCHASES TOP-UP</span></h1>
           <p class="hero-description">
-            Direct in-game top-ups for PUBG Mobile (UC & Royale Pass), FC Mobile, Modern Warships, Delta Force, Blood Strike, Arena Breakout and more. Pay easily via Telecel Mobile Money with guaranteed verification.
+            Ghana's fast manual top-up shop for PUBG Mobile UC, FC Points & esports items. Pay easily via Telecel Cash with 100% verified delivery.
           </p>
           <div class="hero-actions">
-            <a href="#games" class="btn-primary"><i class="fa-solid fa-cart-shopping"></i> Shop Top-Ups Now</a>
+            <a href="#games" class="btn-primary"><i class="fa-solid fa-cart-shopping"></i> Shop Top-Ups Now <i class="fa-solid fa-arrow-right" style="font-size: 0.85em;"></i></a>
             <button onclick="openTrackModal()" class="btn-secondary"><i class="fa-solid fa-receipt"></i> Track Existing Order</button>
+          </div>
+
+          <!-- Trust Badges Row -->
+          <div class="trust-signals-row">
+            <div class="trust-item"><i class="fa-solid fa-bolt" style="color: var(--color-primary);"></i> <span>Instant Manual Delivery</span></div>
+            <div class="trust-item"><i class="fa-solid fa-mobile-screen-button" style="color: var(--color-telecel);"></i> <span>Telecel Cash (*110#)</span></div>
+            <div class="trust-item"><i class="fa-solid fa-shield-halved" style="color: var(--color-success);"></i> <span>100% Safe (Player ID)</span></div>
+            <div class="trust-item"><i class="fa-solid fa-headset" style="color: var(--color-accent);"></i> <span>WhatsApp Support</span></div>
+          </div>
+        </div>
+
+        <!-- Hero Featured Game Visual Showcase Card Gallery -->
+        <div class="hero-visual-showcase">
+          <div class="hero-showcase-title"><i class="fa-solid fa-fire" style="color: var(--color-telecel);"></i> Popular Top-Ups</div>
+          <div class="hero-game-chips">
+            <div class="hero-game-chip" onclick="openCheckoutModal('pubg-mobile')">
+              <img src="assets/images/pubg_mobile_cover.png" alt="PUBG Mobile" class="chip-img">
+              <div class="chip-info">
+                <span class="chip-name">PUBG Mobile</span>
+                <span class="chip-price">From GH₵ 13.00</span>
+              </div>
+              <span class="chip-action"><i class="fa-solid fa-angle-right"></i></span>
+            </div>
+            <div class="hero-game-chip" onclick="openCheckoutModal('fc-mobile')">
+              <img src="assets/images/fc_mobile_cover_1790931894744.png" alt="FC Mobile" class="chip-img">
+              <div class="chip-info">
+                <span class="chip-name">FC Mobile</span>
+                <span class="chip-price">From GH₵ 6.00</span>
+              </div>
+              <span class="chip-action"><i class="fa-solid fa-angle-right"></i></span>
+            </div>
+            <div class="hero-game-chip" onclick="openCheckoutModal('modern-warships')">
+              <img src="assets/images/modern_warships_cover_1790931918258.png" alt="Modern Warships" class="chip-img">
+              <div class="chip-info">
+                <span class="chip-name">Modern Warships</span>
+                <span class="chip-price">From GH₵ 40.00</span>
+              </div>
+              <span class="chip-action"><i class="fa-solid fa-angle-right"></i></span>
+            </div>
+            <div class="hero-game-chip" onclick="openCheckoutModal('blood-strike')">
+              <img src="assets/images/blood_strike_cover_1790931979376.png" alt="Blood Strike" class="chip-img">
+              <div class="chip-info">
+                <span class="chip-name">Blood Strike</span>
+                <span class="chip-price">From GH₵ 7.00</span>
+              </div>
+              <span class="chip-action"><i class="fa-solid fa-angle-right"></i></span>
+            </div>
           </div>
         </div>
       </div>
